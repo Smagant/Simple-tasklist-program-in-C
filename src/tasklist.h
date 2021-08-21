@@ -2,17 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MAX_CHAR_LISTNAME 100
+#define MAX_CHAR_TASKCONTENT 200
+#define MAX_TASKS 50
+
 //data structure of a list
 struct List {
-    char name[100];
+    char name[MAX_CHAR_LISTNAME];
     int idList;
-    char tasks[50][200];
-};
-
-//data structure of a task
-struct Task {
-    char content[500];
-    int level;
+    char tasks[MAX_TASKS][MAX_CHAR_TASKCONTENT];
 };
 
 //set up the lists
@@ -34,7 +32,7 @@ mainlist.idList = 3;
 
 
 //functions for task
-char addTask(struct List list);
+void  addTask(struct List list);
 char modifyTask(struct List list, struct Task task);
 void delTask(struct List list, struct Task task);
 void checkTask(struct List list, struct Task task);
