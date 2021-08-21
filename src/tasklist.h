@@ -10,8 +10,14 @@
 struct List {
     char name[MAX_CHAR_LISTNAME];
     int idList;
+    struct Task task;
     char tasks[MAX_TASKS][MAX_CHAR_TASKCONTENT];
 };
+
+struct Task {
+    char taskContent[MAX_CHAR_TASKCONTENT];
+    int taskid;
+}
 
 //set up the lists
 struct List habits;
