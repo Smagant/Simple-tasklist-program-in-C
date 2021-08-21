@@ -1,13 +1,8 @@
 #include "tasklist.h"
 
-struct List  addList() {
-    printf("Choose a name for your new list");
-
+char addTask(struct List list) {
+    
 }
-
-
-
-
 
 
 
