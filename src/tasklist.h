@@ -13,23 +13,25 @@ struct List {
     char tasks[MAX_TASKS][MAX_CHAR_TASKCONTENT];
 };
 
+/*
 //set up the lists
 struct List habits;
 struct List dauphine;
 struct List mainlist;
 
 //habits specifications
-strcpy(habits.name, "Habits");
+habits.name = "Habits";
 
 //dauphine specifications
-strcpy(dauphine.name, "Dauphine");
+dauphine.name = "Dauphine";
 
 //mainlist specification
-strcpy(mainlist.name, "Main List");
+mainlist.name = "Main List";
+*/
 
 //functions for task
 void addTask(struct List list);
-char modifyTask(struct List list, int taskid);
+void modifyTask(struct List list, int taskid);
 void delTask(struct List list, int taskid);
 void printList(struct List list);
 
