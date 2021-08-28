@@ -1,6 +1,4 @@
-#include <functions.h>
-
-
+#include "functions.h"
 
 using namespace std;
 
@@ -39,6 +37,10 @@ int main(int argc, char ** argv)
 
     //create the tasklist window
     WINDOW *taskwin = newwin(yMax-1, xMax-1, start_y, start_x);
+    box(taskwin, 0, 0);
+    
+    //create the help window
+    WINDOW *helpwin = newwin(yMax-1, xMax-1, start_y, start_x);
     box(taskwin, 0, 0);
     
     refresh();
@@ -98,6 +100,11 @@ int main(int argc, char ** argv)
                 }
                 else if (highlight == 2) {
                     //help window
+                    delwin(win);
+                    delwin(menuwin);
+                    refresh();
+                    mvwprintw(helpwin, 1, (xMax/2)-5, "You are in the help window");
+                    wrefresh(helpwin);
                 }
                 else if (highlight == 3) {
                     //quit option
@@ -111,7 +118,7 @@ int main(int argc, char ** argv)
         }
     }
 
-    printw("your choice was: %s", choices[highlight].c_str());
+    //printw("your choice was: %s", choices[highlight].c_str());
 
     /*
     //create the input window
