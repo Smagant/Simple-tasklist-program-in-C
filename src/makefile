@@ -1,2 +1,2 @@
 tasklist:
-	g++ main.cpp functions.cpp -o task -lncurses
+	gcc main.c functions.c -o task -lncurses
