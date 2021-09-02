@@ -32,14 +32,14 @@ int main(int argc, char ** argv)
     //create the menu window
     WINDOW *menuwin = newwin(yMax-5, xMax-6, start_y+3, start_x+3); 
     box(menuwin, 0, 0);
-
+    /*
     //create the tasklist window
     WINDOW *taskwin = newwin(yMax-1, xMax-1, start_y, start_x);
     box(taskwin, 0, 0);
-    
+    */
     //create the help window
     WINDOW *helpwin = newwin(yMax-1, xMax-1, start_y, start_x);
-    box(taskwin, 0, 0);
+    box(helpwin, 0, 0);
     
     refresh();
     wrefresh(win);
@@ -48,12 +48,14 @@ int main(int argc, char ** argv)
     //menu section
     keypad(menuwin, true);
 
-    char choices[4][12] = {
+    char choices[4][20] = {
         "See tasklist",
         "Save",
         "Help",
         "Quit"
     };
+
+    char task[100][100];
     
     int choice;
     int highlight = 0;
@@ -65,7 +67,7 @@ int main(int argc, char ** argv)
             if(i == highlight) {
                 wattron(menuwin, A_REVERSE);
             }
-            mvwprintw(menuwin, i+1, (xMax/2)-10, choices[i]);
+            mvwprintw(menuwin, i+1, (xMax/2)-10, *(choices + i));
             wattroff(menuwin, A_REVERSE);
         }
         choice = wgetch(menuwin);
@@ -90,7 +92,50 @@ int main(int argc, char ** argv)
                     delwin(win);
                     delwin(menuwin);
                     refresh();
-                    mvwprintw(taskwin, 1, (xMax/2)-5, "You open the tasklist");
+                    //mvwprintw(taskwin, 1, (xMax/2)-5, "You open the tasklist");
+                    displayTasklist(xMax);
+                    int h = 0;
+                    int c;
+                    while(1) {
+                        //display the array on the window
+                        for (int j = 0; j < len2; j++) {
+                            if(j == h) {
+                                wattron(taskwin, A_REVERSE);
+                            }
+                            mvwprintw(taskwin, j+1, (xMax/2)-10, *(task + j));
+                            wattroff(taskwin, A_REVERSE);
+                        }
+                        c = wgetch(taskwin);
+
+                        //choice of the user
+                        switch(c)
+                        {
+                            case KEY_UP:
+                                h--;
+                                if(h == -1) {
+                                    h = 0;
+                                }
+                                break;
+                            case KEY_DOWN:
+                                h;
+                                if(h == len2+1) {
+                                    h = len2-1;
+                                }
+                                break;
+                            case 10:
+                                mvwprintw(taskwin, 1, 1, "you chose to enter");
+                                wrefresh(taskwin);
+                                break;
+                            default:
+                                break;
+                        }
+                        if (c == 10) {
+                            break;
+                        }
+                    }
+                    
+                    
+                    refresh();
                     wrefresh(taskwin);
                 }
                 else if (highlight == 1) {

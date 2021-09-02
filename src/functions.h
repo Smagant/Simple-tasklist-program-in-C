@@ -1,6 +1,13 @@
 #include <ncurses.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+
+//count the number of lines in the text file
+int count(char filename[]);
+
+//display the text file in the interface
+void displayTasklist(char task[][] int xMax);
 
 //Save the newly added task in a text file
 void saveFile();
