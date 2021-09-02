@@ -1,0 +1,6 @@
+OPTIONS:
+- a <task content> = add a new task to the tasklist
+- d <task id>  = delete a specific task of the tasklist using its number
+- m <task id>  = modify a specific task of the tasklist using its number
+- h = help
+- q = quit the application

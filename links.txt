@@ -1,2 +1,0 @@
-https://stackoverflow.com/questions/20716785/how-do-i-delete-a-specific-line-from-text-file-in-c
-https://stackoverflow.com/questions/3183582/what-is-the-fastest-substring-search-algorithm

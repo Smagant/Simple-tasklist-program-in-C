@@ -1,37 +1,26 @@
+#ifndef PTFUNC_H
+#define PTFUNC_H
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-#define MAX_CHAR_LISTNAME 100
-#define MAX_CHAR_TASKCONTENT 200
-#define MAX_TASKS 50
+extern char filename[100];
 
-//data structure of a list
-struct List {
-    char name[MAX_CHAR_LISTNAME];
-    int tasksId[MAX_TASKS];
-    char tasks[MAX_TASKS][MAX_CHAR_TASKCONTENT];
-};
+//count the number of task in the file
+int count(char *filename);
 
-/*
-//set up the lists
-struct List habits;
-struct List dauphine;
-struct List mainlist;
+//add task to the file
+void addTask(char *filename, char *task);
 
-//habits specifications
-habits.name = "Habits";
+//delete a specific task from the file
+void deleteTask(char *filename, char *numTask);
 
-//dauphine specifications
-dauphine.name = "Dauphine";
+//modify a specific task from the file
+void modifyTask(char *filename, char *numTask);
 
-//mainlist specification
-mainlist.name = "Main List";
-*/
+//print all the file in the terminal
+void printFile(char *filename);
 
-//functions for task
-void addTask(struct List list);
-void modifyTask(struct List list, int taskid);
-void delTask(struct List list, int taskid);
-void printList(struct List list);
+//delete the tasklist file
+void deleteList(char *filename);
 
+#endif

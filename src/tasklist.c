@@ -1,58 +1,130 @@
 #include "tasklist.h"
 
-void addTask(struct List list) {
-   for (int i = 0; i < MAX_TASKS; i++) {
-       if (list.tasks[i] == NULL) {
-           printf("task content : ");
-           const char var = getchar();
-           strcpy(list.tasks[i], &var);
-           //list.tasks[i] = getchar();
-           list.tasksId[i] = i;
-       }
-       else {
-           i++;
-       }
-   }
+char filename[100] = "tasklist.txt";
+
+int count(char *filename) {
+    FILE *fp;
+    int count = 0;  // Line counter (result)
+    char c;  // To store a character read from file
+    fp = fopen(filename, "r");
+    
+    if (fp == NULL)
+    {
+        printf("Could not open file %s", filename);
+        return 0;
+    }
+    // Extract characters from file and store in character c
+    for (c = getc(fp); c != EOF; c = getc(fp))
+        if (c == '\n') // Increment count if this character is newline
+            count = count + 1;
+    // Close the file
+    fclose(fp);
+  
+    return count;
 }
 
-void delTask(struct List list, int taskid) {
-    list.tasks[taskid] = NULL;
-    list.tasksId[taskid] = NULL;
+
+void addTask(char *filename, char *task) {
+    
+    char id[16] = {0};
+    FILE *fp;
+    fp = fopen(filename, "a"); 
+    int counter = count(filename);
+    
+    sprintf(id, "%d", counter);
+    fputs(id, fp);
+    fputs(" - ", fp);
+    fputs(task, fp);
+
+    fclose(fp);
+    printFile(filename);
 }
 
-void modifyTask(struct List list, int taskid) {
-    delTask(list, taskid);
-    addTask(list);
-}
+void deleteTask(char *filename, char *numTask) {
+    
+    char task[200];
+    int i;
+    int j = 0;
+    char id[16] = {0};
+    int num;
+    FILE *fpIn;
+    FILE *fpOut;
+    fpIn = fopen(filename, "r");
+    fpOut = fopen("InputFile.txt", "a");
+    sscanf(numTask, "%d", &num);
 
-void printList(struct List list) {
-    printf("%s", list.name);
-    printf("==========================");
-    for (int i = 0; i < MAX_TASKS; i++) {
-        if (list.tasks[i] != NULL) {
-            printf("%d - %s", list.tasksId[i], list.tasks[i]);
+    while(fgets(task, sizeof(task), fpIn)) {
+        sscanf(task, "%d", &i);
+        if (i != num) {
+            sprintf(id, "%d", j);
+            fputs(id, fpOut);
+            fputs(" - ", fpOut);
+            fputs(task + 4, fpOut);
+            j++;
         }
         else {
-            i++;
+            continue;
         }
     }
-}
-
-
-int main() {
-    struct List habits;
-    struct List dauphine;
-    struct List mainlist;
     
-    strcpy(habits.name, "Habits");
-    strcpy(dauphine.name, "Dauphine");
-    strcpy(mainlist.name, "Main List");
-
-    addTask(habits);
-    printList(habits);
-    modifyTask(habits, 0);
-    printList(habits);
-    delTask(habits, 0);
-    printList(habits);
+    remove(filename);
+    rename("InputFile.txt", filename);
+    fclose(fpOut);
+    printFile(filename);
 }
 
+void modifyTask(char *filename, char *numTask) {
+    
+    char task[200];
+    char task2[200];
+    int i;
+    int j = 0;
+    int num;
+    char id[16] = {0};
+    FILE *fpIn;
+    FILE *fpOut;
+    fpIn = fopen(filename, "r");
+    fpOut = fopen("InputFile.txt", "a");
+    sscanf(numTask, "%d", &num);
+
+    while(fgets(task, sizeof(task), fpIn)) {
+        sscanf(task, "%d", &i);
+        if (i == num) {
+            printf("Rewrite the task: ");
+            fgets(task2, sizeof(task2), stdin);
+            sprintf(id, "%d", j);
+            fputs(id, fpOut);
+            fputs(" - ", fpOut);
+            fputs(task2, fpOut);
+            j++;
+        }
+        else {
+            sprintf(id, "%d", j);
+            fputs(id, fpOut);
+            fputs(" - ", fpOut);
+            fputs(task + 4, fpOut);
+            j++;
+        }
+    }
+    
+    remove(filename);
+    rename("InputFile.txt", filename);
+    fclose(fpOut);
+    printFile(filename);
+}
+
+void printFile(char *filename) {
+    
+    char task[200];
+    FILE* fp;
+    fp = fopen(filename, "r");
+    
+    printf("**************************************\n");
+    while (fgets(task, sizeof(task), fp)) {
+        printf("%s", task); 
+    }
+    printf("**************************************\n");
+    printf("\n");
+    
+    fclose(fp);
+}
