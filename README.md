@@ -2,7 +2,7 @@
 ## Version 1.0
 Here is a simple implementation of a tasklist in C displayed in the terminal. You can add, delete or modify each task on the list.
 
-### Requirements
+### How to use it
 1 - Install a compiler for the C language (for example GCC)
 2 - Open your terminal and go to the "src" file.
 3 - Compile the program with this command (if you're using gcc)
