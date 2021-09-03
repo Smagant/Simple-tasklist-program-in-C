@@ -1,4 +1,4 @@
-# Terminal based Tasklist
+# Terminal based Tasklist using C
 ## Version 1.0
 Here is a simple implementation of a tasklist in C displayed in the terminal. You can add, delete or modify each task on the list.
 
